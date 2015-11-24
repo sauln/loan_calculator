@@ -18,7 +18,7 @@ This will be the first larger project I undertake in Scala and is entirely a lea
   * Get a grip on Scala
   * Get a grip on functional programming
   * Get a grip on testing
-  * Get a grip on Play/MVC
+  * Get a grip on a web framework 
 
 
 

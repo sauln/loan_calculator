@@ -5,6 +5,16 @@ package loan
  * Or do I write it functional from the get go?  
  */
 
+class strategy{
+  /* how do these pieces actually fit together?
+   */
+
+
+
+
+}
+
+
 
 
 class loan(interest_rate: Double, principal: Double, minimum_payment: Double){
