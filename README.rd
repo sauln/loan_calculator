@@ -1,39 +1,29 @@
-*This project will be the first larger project I undertake in Scala
+# Scala loan calculator
 
-**build a small loan calculator using modern web framework
+This project is a small loan calculator that will compute the optimal payback scenario given user defined loans and chosen strategy.
 
-First, I need to develop the basic structure of MVC - then
-
-
-
-Parts:
-  linear programming algorithm
-  multiple strategies
-    least interest
-    fastest payoff
-    cut monthly expenses
-  nice looking front end
-  comprehensive testing
+This will be the first larger project I undertake in Scala and is entirely a learning experience.
 
 
+## Parts:
+  * linear programming algorithm
+  * multiple strategies
+    * least interest
+    * fastest payoff
+    * cut monthly expenses
+  * nice looking front end
+  * comprehensive testing
 
-
-
-In an attempt to think MVC, what are the models?
-  each loan
-  each strategy
-  each payment outcome
-    is each payment, or each payment group a model?
+## Learning I want out of this project
+  * Get a grip on Scala
+  * Get a grip on functional programming
+  * Get a grip on testing
+  * Get a grip on Play/MVC
 
 
 
 
-user inputs loan information
-chooses strategy
-optimization happens
-output the payment strategy
 
-Eventually, things like user accounts and saving settings - but first, once off
 
 
 
