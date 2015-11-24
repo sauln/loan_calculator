@@ -1,7 +1,6 @@
-This project will be the first larger project I undertake in Scala
+*This project will be the first larger project I undertake in Scala
 
-I intend to build a small loan calculator using modern web framework
-  - ideally in a framework that makes using the code for web & app easy.
+**build a small loan calculator using modern web framework
 
 First, I need to develop the basic structure of MVC - then
 
