@@ -5,7 +5,7 @@ This project is a small loan calculator that will compute the optimal payback sc
 This will be the first larger project I undertake in Scala and is entirely a learning experience.
 
 
-## Parts:
+##Parts:
   * linear programming algorithm
   * multiple strategies
     * least interest
