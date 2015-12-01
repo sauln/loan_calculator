@@ -1,44 +1,18 @@
-package loan
+package code
+package model
 
 
-/** 
- * Do I write it first, and then make it functional?
- * Or do I write it functional from the get go?  
- */
 
 
 /**
- * end the end, we want a list of (loan, payment) tuples so we can show a table
- * of all the values that we come up with.
+ * This class represents the model of the loans
  *
  */
 
-
-//want loans, payments  - should there be an object that is (loan, payment)??
-
-object Strategy{
-
-  type Strat =  (List[Loan], Double) => List[(Double, Loan)]
-
-  def minimum: Strat = {
-    case (loans: List[Loan], b: Double) =>
- // def minimum(loans: List[Loan], available_payment: Double): List[(Double, Loan)] = {
-       loans.map(_.min) zip loans
-  }
-  def even(loans: List[Loan], available_payment: Double): List[(Double, Loan)] = {
-      ((loans.map(_.min) zip
-      List.fill(loans.length)(available_payment/loans.length))
-      .map{ case(a,b) => a max b }) zip loans
-  }
-  def snowball(loans: List[Loan], available_payment: Double): List[(Double, Loan)] = {
-      loans.map(_.min) zip loans
-  }
-}
-
-
-
-
-
+/**
+ * How do I capture state in a functional way?
+ *
+ */
 
 class Loan(i: Double, b: Double, m: Double){
   val min = m
@@ -57,6 +31,39 @@ class Loan(i: Double, b: Double, m: Double){
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 trait Loan{
   def make_payment(payment: Double): Loan
@@ -74,7 +81,7 @@ object Loan {
     }
     def accrue_interest(months: Int = 1): Loan = {
       val interest_paid = balance * ( 1 + (interest * months)/12)
-      val current_Loan = Student(interest, balance - interest_paid, min)
+      dval current_Loan = Student(interest, balance - interest_paid, min)
       current_Loan
     }
   }

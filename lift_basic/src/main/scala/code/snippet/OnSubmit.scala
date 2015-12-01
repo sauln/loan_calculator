@@ -23,6 +23,7 @@ object OnSubmit {
       else {
         // otherwise give the user feedback and 
         // redirect to the home page
+        S.notice("Other:" +other)
         S.notice("Name: "+name)
         S.notice("Age: "+age)
         S.redirectTo("/")
@@ -32,6 +33,7 @@ object OnSubmit {
     // associate each of the form elements
     // with a function.  Behavio to perform 
     // when the form element is submitted
+    "name=other" #> SHtml.onSubmit(other = _) &
     "name=name" #> SHtml.onSubmit(name = _) & //set the name
     // set the age variable if we can convert to an Int
     "name=age"  #> SHtml.onSubmit(s => asInt(s).foreach(age = _)) &
