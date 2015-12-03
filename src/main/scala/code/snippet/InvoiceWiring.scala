@@ -17,10 +17,14 @@ import scala.xml.{NodeSeq, Text}
 // will use this as a basis for the loan input system
 
 
+case class Loan(guid: String, 
+                name: String, 
+                balance: Double, 
+                interest_rate: Double, 
+                minimum: Double)
+//case class Line(guid: String, name: String, price: Double, taxable: Boolean)
 
-case class Line(guid: String, name: String, price: Double, taxable: Boolean)
-
-class InvoiceWiring {
+class LoanWiring {
 
 
 
@@ -31,18 +35,27 @@ class InvoiceWiring {
    */
   private object Info {
 
-    val invoices = ValueCell(List(newLine))//declares a new line
-    val taxRate = ValueCell(0.05d)//sets default taxRate
+    val loans = ValueCell(List(newLoan))//declares a new line
+    //val taxRate = ValueCell(0.05d)//sets default taxRate
     
+    val subtotal = loans.lift(_.foldLeft(0d)(_ + _.balance))
+    
+    val interest = loans.lift(_.foldLeft(0d)
+                    {case (a, b) => a + (b.balance * b.interest_rate)})
+    //val interest = loans.map((a) => (a.balance *  (a.interest_rate/12)))
+                    //    .lift(_.foldLeft(0d)(_ + _))
+
+    val total   = subtotal.lift(interest) {_ * _}
+
     //not sure what lift does - maybe pulls the value out of the result of the fold?
-    val subtotal = invoices.lift(_.foldLeft(0d)(_ + _.price))
+    //val subtotal = invoices.lift(_.foldLeft(0d)(_ + _.price))
     
     //sums just taxable - also unsure of lift in this situation
-    val taxable = invoices.lift(_.filter(_.taxable).foldLeft(0D)(_+_.price))
+    //val taxable = invoices.lift(_.filter(_.taxable).foldLeft(0D)(_+_.price))
 
-    val tax = taxRate.lift(taxable){_ * _}// all this does is multiply taxRate and taxable
+    //val tax = taxRate.lift(taxable){_ * _}// all this does is multiply taxRate and taxable
                                           // taxRate must need lifting out of the ValueCell?
-    val total = subtotal.lift(tax) {_ + _}// is lift partially applying the function?
+    //val total = subtotal.lift(tax) {_ + _}// is lift partially applying the function?
                                           // does lift temporarily lift the value out of
                                           // some wrapper, do the calculation, then put it
                                           // back in the wrapper?
@@ -53,67 +66,56 @@ class InvoiceWiring {
   }
 
 
-
-  /**
-   *  wire an element to subtotal
-   */
+  // these are the calculated elements that are wired to input values
   def subtotal = WiringUI.toNode(Info.subtotal)(doubleDraw)
-
-
-  /**
-   * wire elemnt to taxable
-   */
-  def taxable = WiringUI.toNode(Info.taxable, JqWiringSupport.fade)(doubleDraw)
-
-  // etc
-  def tax = WiringUI.toNode(Info.tax, JqWiringSupport.fade)(doubleDraw)
-
+  def interest = WiringUI.toNode(Info.interest, JqWiringSupport.fade)(doubleDraw)
   def total = WiringUI.toNode(Info.total, JqWiringSupport.fade)(doubleDraw)
 
 
-  /**
-   * tax rate input
-   */
-  def taxRate = ajaxText(Info.taxRate.get.toString, 
-                         doubleToJsCmd(Info.taxRate.set))
+  //def taxRate = ajaxText(Info.taxRate.get.toString, 
+   //                      doubleToJsCmd(Info.taxRate.set))
 
 
   /**
    * draw all the input lines
-   * 
    */
-  def showLines = "* *" #> (Info.invoices.get.flatMap(renderLine): NodeSeq)
+  def showLoans = "* *" #> (Info.loans.get.flatMap(renderLoan): NodeSeq)
 
   /**
    * add a line to the input
    */
-  def addLine = 
+  def addLoan = 
     "* [onclick]" #> ajaxInvoke(() =>
-      JqJsCmds.AppendHtml("invoice_lines", renderLine(appendLine)))
+      JqJsCmds.AppendHtml("loan_inputs", renderLoan(appendLoan)))
 
   /**
    * render a line of input fields
    */
 
-  private def renderLine(theLine: Line): NodeSeq = {
-    import theLine._
+  private def renderLoan(theLoan: Loan): NodeSeq = {
+    import theLoan._
 
     <div id={guid}>
-    {ajaxText(name, s => mutateLine(guid)(_.copy(name = s)))}
+    {ajaxText(name, s => mutateLoan(guid)(_.copy(name = s)))}
 
-    {ajaxText(price.toString,
-                (d: Double) => mutateLine(guid) {_.copy(price = d)})}
-
-    {ajaxCheckbox(theLine.taxable,
-                b => mutateLine(guid) {_.copy(taxable = b)})}
+    {ajaxText(balance.toString,
+                (d: Double) => mutateLoan(guid) {_.copy(balance = d)})}
+    {ajaxText(interest_rate.toString,
+                (d: Double) => mutateLoan(guid) {_.copy(interest_rate = d)})}
+    {ajaxText(minimum.toString,
+                (d: Double) => mutateLoan(guid) {_.copy(minimum = d)})}
+    
+    
     </div>
   }
 
-  private def newLine = Line(nextFuncName, "", 0, false)
+    //{ajaxCheckbox(theLine.taxable,
+    //            b => mutateLine(guid) {_.copy(taxable = b)})}
+  private def newLoan = Loan(nextFuncName, "name", 0, 0,0)
 
-  private def appendLine: Line = {
-    val ret = newLine
-    Info.invoices.set(ret :: Info.invoices.get)
+  private def appendLoan: Loan = {
+    val ret = newLoan
+    Info.loans.set(ret :: Info.loans.get)
     ret
   }
 
@@ -121,11 +123,11 @@ class InvoiceWiring {
    * Mutate a line and update the info field
    */
 
-  private def mutateLine(guid: String)(f: Line => Line) {
-    val all = Info.invoices.get
+  private def mutateLoan(guid: String)(f: Loan => Loan) {
+    val all = Info.loans.get
     val head = all.filter(_.guid == guid).map(f)
     val rest = all.filter(_.guid != guid)
-    Info.invoices.set(head ::: rest)
+    Info.loans.set(head ::: rest)
   }
 
 

@@ -1,20 +1,21 @@
 <div>
-  <div id="invoice_lines" data-lift="InvoiceWiring.showLines"> input goes here </div>
+  <div id="loan_inputs" data-lift="LoanWiring.showLoans"> input goes here </div>
 
 
 
   <div>
-    <button data-lift="InvoiceWiring.addLine?div=invoice_lines"> Add </button>
+    <button data-lift="LoanWiring.addLoan?div=loan_inputs"> Add </button>
   </div>
 
-  <div>Subtotal: <span data-lift="InvoiceWiring.subtotal">subtotal</span></div>
 
-  <div>Tax Rate: <input data-lift="InvoiceWiring.taxRate"></div>
+<div>Subtotal: <span data-lift="LoanWiring.subtotal">subtotal</span></div>
 
-  <div>Taxable: <span data-lift="InvoiceWiring.taxable">Taxable</span></div>
+  <!--<div>Tax Rate: <input data-lift="LoanWiring.taxRate"></div>-->
 
-  <div>Tax: <span data-lift="InvoiceWiring.tax">Tax</span></div>
+  <div>interest: <span data-lift="LoanWiring.interest">Taxable</span></div>
 
-  <div>Total: <span data-lift="InvoiceWiring.total">Total</span></div>
+  <!--<div>Tax: <span data-lift="LoanWiring.tax">Tax</span></div>-->
+
+  <div>Total: <span data-lift="LoanWiring.total">Total</span></div>
 </div>
 
