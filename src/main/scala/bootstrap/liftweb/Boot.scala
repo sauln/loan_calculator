@@ -42,20 +42,29 @@ class Boot {
     LiftRules.addToPackages("code")
 
     // Build SiteMap
-    def sitemap = SiteMap(
-      Menu.i("Home") / "index" >>
-      User.AddUserMenusAfter, // the simple way to declare a menu
+
+    val homeMenu = Menu(Loc("homePage", "index"  :: Nil, "Home"))
+
+    val aboutMenu = Menu(Loc("aboutPage",  "about" :: Nil, "About"))
+    
+    
+    LiftRules.setSiteMap(SiteMap(homeMenu, aboutMenu ))
+    //def sitemap = SiteMap(
+     // Menu.i("Home") / "index" )
+      //>>
+      //Menu.i("Loan Calculator") / "loan_calculator", 
+      //User.AddUserMenusAfter, // the simple way to declare a menu
 
       // more complex because this menu allows anything in the
       // /static path to be visible
-      Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
-	       "Static Content")))
+      //Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
+	    //   "Static Content")))
 
-    def sitemapMutators = User.sitemapMutator
+    //def sitemapMutators = User.sitemapMutator
 
     // set the sitemap.  Note if you don't want access control for
     // each page, just comment this line out.
-    LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
+    //LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
 
     //Init the jQuery module, see http://liftweb.net/jquery for more information.
     LiftRules.jsArtifacts = JQueryArtifacts

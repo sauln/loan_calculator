@@ -31,45 +31,22 @@ class LoanWiring {
 
   /**
    * define the relationships amoung items
-   * notice its singleton object - 
    */
   private object Info {
-
     val loans = ValueCell(List(newLoan))//declares a new line
     //val taxRate = ValueCell(0.05d)//sets default taxRate
-    
-    val subtotal = loans.lift(_.foldLeft(0d)(_ + _.balance))
-    
-    val interest = loans.lift(_.foldLeft(0d)
-                    {case (a, b) => a + (b.balance * b.interest_rate)})
-    //val interest = loans.map((a) => (a.balance *  (a.interest_rate/12)))
-                    //    .lift(_.foldLeft(0d)(_ + _))
-
-    val total   = subtotal.lift(interest) {_ * _}
-
-    //not sure what lift does - maybe pulls the value out of the result of the fold?
-    //val subtotal = invoices.lift(_.foldLeft(0d)(_ + _.price))
-    
-    //sums just taxable - also unsure of lift in this situation
-    //val taxable = invoices.lift(_.filter(_.taxable).foldLeft(0D)(_+_.price))
-
-    //val tax = taxRate.lift(taxable){_ * _}// all this does is multiply taxRate and taxable
-                                          // taxRate must need lifting out of the ValueCell?
-    //val total = subtotal.lift(tax) {_ + _}// is lift partially applying the function?
-                                          // does lift temporarily lift the value out of
-                                          // some wrapper, do the calculation, then put it
-                                          // back in the wrapper?
-
-
-
+    //val subtotal = loans.lift(_.foldLeft(0d)(_ + _.balance))
+    //val interest = loans.lift(_.foldLeft(0d)
+     //               {case (a, b) => a + (b.balance * b.interest_rate)})
+    //val total   = subtotal.lift(interest) {_ * _}
 
   }
 
 
   // these are the calculated elements that are wired to input values
-  def subtotal = WiringUI.toNode(Info.subtotal)(doubleDraw)
-  def interest = WiringUI.toNode(Info.interest, JqWiringSupport.fade)(doubleDraw)
-  def total = WiringUI.toNode(Info.total, JqWiringSupport.fade)(doubleDraw)
+  //def subtotal = WiringUI.toNode(Info.subtotal)(doubleDraw)
+  //def interest = WiringUI.toNode(Info.interest, JqWiringSupport.fade)(doubleDraw)
+  //def total = WiringUI.toNode(Info.total, JqWiringSupport.fade)(doubleDraw)
 
 
   //def taxRate = ajaxText(Info.taxRate.get.toString, 
@@ -88,6 +65,9 @@ class LoanWiring {
     "* [onclick]" #> ajaxInvoke(() =>
       JqJsCmds.AppendHtml("loan_inputs", renderLoan(appendLoan)))
 
+  //def removeLoan = 
+  //  "* [onclick]" #> ajaxInvoke(() =>
+  //    JqJsCmds.EmptyAfter("loan_inputs", Nil))
   /**
    * render a line of input fields
    */
@@ -100,18 +80,21 @@ class LoanWiring {
 
     {ajaxText(balance.toString,
                 (d: Double) => mutateLoan(guid) {_.copy(balance = d)})}
+
     {ajaxText(interest_rate.toString,
                 (d: Double) => mutateLoan(guid) {_.copy(interest_rate = d)})}
+    
     {ajaxText(minimum.toString,
                 (d: Double) => mutateLoan(guid) {_.copy(minimum = d)})}
-    
     
     </div>
   }
 
-    //{ajaxCheckbox(theLine.taxable,
-    //            b => mutateLine(guid) {_.copy(taxable = b)})}
   private def newLoan = Loan(nextFuncName, "name", 0, 0,0)
+
+  //private def cutLastLoan: Loan = {
+  //  val kept= Info.loans.dropRight(1)
+  //}
 
   private def appendLoan: Loan = {
     val ret = newLoan
@@ -140,47 +123,7 @@ class LoanWiring {
   private implicit def unitToJsCmd(in: Unit): JsCmd = Noop
   private implicit def doubleToJsCmd(in: Double => Any): String => JsCmd =
     str => {asDouble(str).foreach(in)}
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 

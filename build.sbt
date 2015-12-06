@@ -1,8 +1,8 @@
-name := "Lift 2.5 starter template"
+name := "Loan calculator with Lift 2.5"
 
-version := "0.0.1"
+version := "0.0.2"
 
-organization := "net.liftweb"
+organization := "Saulgill LLC"
 
 scalaVersion := "2.9.1"
 
