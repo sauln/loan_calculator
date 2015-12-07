@@ -44,11 +44,12 @@ class Boot {
     // Build SiteMap
 
     val homeMenu = Menu(Loc("homePage", "index"  :: Nil, "Home"))
-
+    val calcMenu = Menu(Loc("calulator", "loan_calculator" :: Nil, "Calculator"))
+                       
     val aboutMenu = Menu(Loc("aboutPage",  "about" :: Nil, "About"))
     
     
-    LiftRules.setSiteMap(SiteMap(homeMenu, aboutMenu ))
+    LiftRules.setSiteMap(SiteMap(homeMenu, aboutMenu, calcMenu ))
     //def sitemap = SiteMap(
      // Menu.i("Home") / "index" )
       //>>

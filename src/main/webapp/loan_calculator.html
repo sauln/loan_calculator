@@ -1,28 +1,33 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-  <title>Loan Calculator</title>
-  </head>
-  <body class="lift:content_id=main">
-    <div id="main" class="lift:surround?with=default;at=content">
-      <h2>Loan Calculator</h2>
-      <p>
+<lift:surround with="default" at="content">
 
 
-  
+This is a scratch pad for working on different methods of the form!
+
+  <div data-lift="Ajax">
+    <div id="messages"></div>
+    
+      <div id="select">
+         the output is <span id="number"></span> 
+      </div>
 
 
 
-        <span class="lift:embed?what=wiring">
-          this is kind of cool
-        </span>
+  <div id="ajaxText">
+    you enetered <span id="value"> </span> in the text box.
+  </div>
 
-      </p>
+  <div>
+    <button data-lift="LoanWiring.calculate_values?div=calculated"> Calculate </button>
+  </div>
+  <div id="calc"></div>
+
+
     </div>
 
-  </body>
-</html>
 
 
+  </div>
+
+
+
+</lift:surround>

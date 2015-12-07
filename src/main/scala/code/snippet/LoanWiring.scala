@@ -1,6 +1,9 @@
 package code
 package snippet
 
+
+import net.liftweb.common._
+
 import net.liftweb._
 import http._
 import SHtml._
@@ -9,6 +12,7 @@ import Helpers._
 import js._
 import js.JsCmds._
 import js.jquery._
+import js.jquery.JqJsCmds._
 
 import scala.xml.{NodeSeq, Text}
 
@@ -24,16 +28,105 @@ case class Loan(guid: String,
                 minimum: Double)
 //case class Line(guid: String, name: String, price: Double, taxable: Boolean)
 
+
+
+
+
+// want to be able to add a new line for loan inputs
+// want a button click to calculate the results
+//
+
+
+class Ajax extends Loggable {
+
+
+  def render = {
+    var cnt = 0
+
+
+    //add a loan entry
+
+    
+
+
+    def doClicker(in: NodeSeq) = a(() => {
+      cnt = cnt + 1;
+      SetHtml("count", Text(cnt.toString))
+    }, in)
+
+
+    def doSelect(in: NodeSeq) = ajaxSelect(
+      List("dog", "cow", "pig").map(i => (i.toString, i.toString)),
+      Full("dog"),
+      v => DisplayMessage("messages", ("#number" #> Text(v)).apply(in), 5 seconds, 1 second))
+
+
+    def doText(in: NodeSeq) = ajaxText("", v => DisplayMessage("messages", ("#value" #>
+      Text(v)).apply(in), 4 seconds, 1 second))
+
+    "#clicker" #> doClicker _ &
+      "#select" #> doSelect _ &
+      "#ajaxText" #> doText _
+
+  }
+
+
+  private def buildQuery(current: String, limit: Int): Seq[String] = {
+    logger.info("Checking on server side with " + current + " limit " + limit)
+    (1 to limit).map(n => current + "" + n)
+  }
+
+  def buttonClick = {
+    import js.JE._
+
+    "* [onclick]" #> SHtml.ajaxCall(ValById("the_input"),
+    s => SetHtml("messages", <i> Text box is 
+      {s}
+    </i>))
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class LoanWiring {
-
-
-
 
   /**
    * define the relationships amoung items
    */
   private object Info {
     val loans = ValueCell(List(newLoan))//declares a new line
+
+
     //val taxRate = ValueCell(0.05d)//sets default taxRate
     //val subtotal = loans.lift(_.foldLeft(0d)(_ + _.balance))
     //val interest = loans.lift(_.foldLeft(0d)
@@ -51,6 +144,20 @@ class LoanWiring {
 
   //def taxRate = ajaxText(Info.taxRate.get.toString, 
    //                      doubleToJsCmd(Info.taxRate.set))
+
+
+ // def doCalculate(in: NodeSeq) = a(() => {
+ //   SetHtml("count", Text("Hey Dude"))
+ // }, in)
+
+
+  // "#calculate_values" #> doCalculate _ 
+
+  def calculate_values = 
+    "* [onClick]" #> ajaxInvoke(() => {
+      SetHtml("calc", Text("Hey dude"))
+    })
+
 
 
   /**
@@ -72,6 +179,17 @@ class LoanWiring {
    * render a line of input fields
    */
 
+
+/*
+  private def renderCalculated(myVar: String): NodeSeq = {
+
+    <div id="key">
+
+    {ajaxText(myVar,
+                (str) => myVar = str )}
+    
+    </div>
+  }*/
   private def renderLoan(theLoan: Loan): NodeSeq = {
     import theLoan._
 
