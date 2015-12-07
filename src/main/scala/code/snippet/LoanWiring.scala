@@ -37,6 +37,32 @@ case class Loan(guid: String,
 //
 
 
+
+
+
+
+object LoanIn {
+  case class LoanItem(balance: String, minpayment: String, interest: String)
+  def render = {
+    var balance = ""
+    var minpayment = ""
+    var interest = ""
+
+    //def process(): JsCmd = {
+            
+    //}
+
+    "name=balance" #> SHtml.onSubmit(balance= _ ) &
+    "name=minpayment" #> SHtml.onSubmit(minpayment= _ ) &
+    "name=interest" #> SHtml.onSubmit(interest= _ )
+
+
+  }
+}
+
+
+
+
 class Ajax extends Loggable {
 
 
@@ -127,10 +153,12 @@ class LoanWiring {
     val loans = ValueCell(List(newLoan))//declares a new line
 
 
+    //val loans = List(newLoan)
+
     //val taxRate = ValueCell(0.05d)//sets default taxRate
     //val subtotal = loans.lift(_.foldLeft(0d)(_ + _.balance))
     //val interest = loans.lift(_.foldLeft(0d)
-     //               {case (a, b) => a + (b.balance * b.interest_rate)})
+    //               {case (a, b) => a + (b.balance * b.interest_rate)})
     //val total   = subtotal.lift(interest) {_ * _}
 
   }
@@ -180,16 +208,6 @@ class LoanWiring {
    */
 
 
-/*
-  private def renderCalculated(myVar: String): NodeSeq = {
-
-    <div id="key">
-
-    {ajaxText(myVar,
-                (str) => myVar = str )}
-    
-    </div>
-  }*/
   private def renderLoan(theLoan: Loan): NodeSeq = {
     import theLoan._
 

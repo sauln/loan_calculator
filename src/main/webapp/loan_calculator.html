@@ -5,16 +5,37 @@ This is a scratch pad for working on different methods of the form!
 
   <div data-lift="Ajax">
     <div id="messages"></div>
-    
+   
+
+   <!--
       <div id="select">
          the output is <span id="number"></span> 
       </div>
 
 
-
   <div id="ajaxText">
     you enetered <span id="value"> </span> in the text box.
   </div>
+
+    -->
+
+
+<form class="lift:form.ajax">
+<div class="lift:LoanIn">
+  <input type="text" placeholder="Balance" name="balance"/>
+  <input type="text" placeholder="Minimum" name="minpayment"/>
+  <input type="text" placeholder="Interest Rate" name="interest"/>
+  <input type="submit" value="Add" />
+</div>
+</form>
+
+
+
+<!--
+  <form class="lift:ScreenExample?form=post">
+  </form>
+-->
+
 
   <div>
     <button data-lift="LoanWiring.calculate_values?div=calculated"> Calculate </button>
