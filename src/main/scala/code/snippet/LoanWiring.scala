@@ -2,8 +2,12 @@ package code
 package snippet
 
 
-import net.liftweb.common._
 
+/**
+ * This page is an mostly a scratch pad for different loan input examples 
+ */
+
+import net.liftweb.common._
 import net.liftweb._
 import http._
 import SHtml._
@@ -16,9 +20,35 @@ import js.jquery.JqJsCmds._
 
 import scala.xml.{NodeSeq, Text}
 
+/**
+ * Most of this code has been found from the demo or simple lift sights
+ * I'm having difficulty with old versions and finding examples from old versions
+ * also, it seems much of what I have to learn is actually jQuery, not Scala.
+ */
 
-// got the original for this code at seventhings.liftweb.net/wiring
-// will use this as a basis for the loan input system
+
+/**
+ * WANT:  An input line for a loan
+ *        when one loan is input, a new line appears
+ *        loans are progressivly added to a list of loans
+ *        when "calculate" button is pressed, the chosen strategy is picked up
+ *        the payoff results for the loans and given strategy is calculated and displayed.
+ */
+
+
+
+
+/**
+ * I think that wiring is unnecessary - the example was good, but I want to be able to 
+ * add a new line via ajax without the page refreshing everything a field is updated.
+ * I believe I have to dig deeper into JavaScript to do this.  
+ * 
+ * Idea - when button is pushed, pull data into an object that is maintained per user
+ *        also generate new line of input data and turn input fields where loan was input 
+ *        into display values.
+ *        
+ */
+
 
 
 case class Loan(guid: String, 
@@ -26,19 +56,6 @@ case class Loan(guid: String,
                 balance: Double, 
                 interest_rate: Double, 
                 minimum: Double)
-//case class Line(guid: String, name: String, price: Double, taxable: Boolean)
-
-
-
-
-
-// want to be able to add a new line for loan inputs
-// want a button click to calculate the results
-//
-
-
-
-
 
 
 object LoanIn {
@@ -104,42 +121,12 @@ class Ajax extends Loggable {
 
   def buttonClick = {
     import js.JE._
-
     "* [onclick]" #> SHtml.ajaxCall(ValById("the_input"),
     s => SetHtml("messages", <i> Text box is 
       {s}
     </i>))
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -164,22 +151,6 @@ class LoanWiring {
   }
 
 
-  // these are the calculated elements that are wired to input values
-  //def subtotal = WiringUI.toNode(Info.subtotal)(doubleDraw)
-  //def interest = WiringUI.toNode(Info.interest, JqWiringSupport.fade)(doubleDraw)
-  //def total = WiringUI.toNode(Info.total, JqWiringSupport.fade)(doubleDraw)
-
-
-  //def taxRate = ajaxText(Info.taxRate.get.toString, 
-   //                      doubleToJsCmd(Info.taxRate.set))
-
-
- // def doCalculate(in: NodeSeq) = a(() => {
- //   SetHtml("count", Text("Hey Dude"))
- // }, in)
-
-
-  // "#calculate_values" #> doCalculate _ 
 
   def calculate_values = 
     "* [onClick]" #> ajaxInvoke(() => {
@@ -200,12 +171,6 @@ class LoanWiring {
     "* [onclick]" #> ajaxInvoke(() =>
       JqJsCmds.AppendHtml("loan_inputs", renderLoan(appendLoan)))
 
-  //def removeLoan = 
-  //  "* [onclick]" #> ajaxInvoke(() =>
-  //    JqJsCmds.EmptyAfter("loan_inputs", Nil))
-  /**
-   * render a line of input fields
-   */
 
 
   private def renderLoan(theLoan: Loan): NodeSeq = {

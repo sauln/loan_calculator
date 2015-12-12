@@ -7,18 +7,21 @@ This will be the first larger project I undertake in Scala and is entirely a lea
 
 ##Parts:
   * linear programming algorithm
+    * though the problem is simple enough to not need a full linear programming algorithm, I would like to phrase the problem to use a custom linear programming algorithm and one using one found in a common library.
   * multiple strategies
-    * least interest
-    * fastest payoff
-    * cut monthly expenses
-  * nice looking front end
-  * comprehensive testing
+    * two coined strategies are:
+      * snowball - pay off smallest loan first
+      * avalanche - pay off highest interest rate first
+    * fastest payoff - this could require a linear programming algorithm
+    * pay the lowest amount - this can be shown to be equivalent to the avalanche method via the linear programming algorithm.
+  * nice looking front end 
+  * comprehensive testing 
 
 ## Learning I want out of this project
-  * Get a grip on Scala
-  * Get a grip on functional programming
-  * Get a grip on testing
-  * Get a grip on a web framework 
+  * Get a grip on Scala - actually the smallest part of this project
+  * Get a grip on functional programming 
+  * Get a grip on testing - this is difficult to incorporate when I'm learning so many other aspects.  
+  * Get a grip on a web framework - Use lift
 
 
 
@@ -28,14 +31,7 @@ This will be the first larger project I undertake in Scala and is entirely a lea
     * how to get access to data?
     * restructure page so it looks better
     * dynamically allow more loan inputs
-  * Integrate loan model into lift
-    * take data from forms and build loans
-    * apply stategies
-    * display results
-  * completely merge and restructure the two projects into one based on lift
-    * loan calculator started in one sbt project, building off of lift_base.  merge the two?
-  * figure out this testing - 
-    * was using the manager.scala - I think I need to use unit tests to be sure I'm developing correctly
+  * figure out this testing - choose a library - ask at PDXScala 
 
 
 
