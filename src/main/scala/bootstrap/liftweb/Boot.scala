@@ -45,7 +45,6 @@ class Boot {
 
     val homeMenu = Menu(Loc("homePage", "index"  :: Nil, "Home"))
     val calcMenu = Menu(Loc("calulator", "loan_calculator" :: Nil, "Calculator"))
-                       
     val aboutMenu = Menu(Loc("aboutPage",  "about" :: Nil, "About"))
     
     

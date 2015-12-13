@@ -62,18 +62,32 @@ object LoanIn {
   case class LoanItem(balance: String, minpayment: String, interest: String)
   def render = {
     var balance = ""
-    var minpayment = ""
+    var minimum = ""
     var interest = ""
 
-    //def process(): JsCmd = {
-            
-    //}
-
-    "name=balance" #> SHtml.onSubmit(balance= _ ) &
-    "name=minpayment" #> SHtml.onSubmit(minpayment= _ ) &
-    "name=interest" #> SHtml.onSubmit(interest= _ )
+    val whence = S.referer openOr "/"
 
 
+    
+
+
+
+    def process(): JsCmd = {
+      
+      S.notice("Balance: "+balance)
+      S.notice("Interest: "+interest)
+
+      Thread.sleep(500)        
+    }
+    
+
+    //"name=balance" #> SHtml.onSubmit(balance= _ ) &
+    //"name=minpayment" #> SHtml.onSubmit(minpayment= _ ) &
+    //"name=interest" #> SHtml.onSubmit(interest= _ )
+
+    "name=minimum" #> SHtml.text(minimum, minimum = _) &
+    "name=balance" #> SHtml.text(balance, balance = _ ) &
+    "name=interest" #> (SHtml.text(interest, interest = _) ++ SHtml.hidden(process))
   }
 }
 
@@ -154,7 +168,10 @@ class LoanWiring {
 
   def calculate_values = 
     "* [onClick]" #> ajaxInvoke(() => {
-      SetHtml("calc", Text("Hey dude"))
+      
+      val balance = S.param("bal") openOr "no input"
+
+      SetHtml("calc", Text(balance))
     })
 
 
@@ -167,6 +184,9 @@ class LoanWiring {
   /**
    * add a line to the input
    */
+
+
+  
   def addLoan = 
     "* [onclick]" #> ajaxInvoke(() =>
       JqJsCmds.AppendHtml("loan_inputs", renderLoan(appendLoan)))
