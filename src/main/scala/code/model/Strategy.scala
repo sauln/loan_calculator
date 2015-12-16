@@ -2,7 +2,7 @@ package code
 package model
 
 
-import Loan._
+//import Loan._
 /**
  * This object captures the idea of various repayment strategies.
  * Will probably be refactored many more times.

@@ -15,29 +15,46 @@ package model
  */
 
 
+//case class Loan(val guid: Int, val balance: Double, val interest: Double, val minimum: Double) 
+
+
+class Loan (guid: Int, balance: Double, interest: Double, minimum: Double){
+  //def apply(guid: Int, balance: Double, interest: Double, minimum: Double) =
+  //  new Loan(guid, balance, interest, minimum)
+  //val guid = guid
+  //val balance = balance
+  //val interest = interest
+  //val minimum = minimum
 
 
 
-object Loan {
-  var balance = ""
-  var interest = ""
-  var minimum = ""
 
+  def sum: Double = 
+    balance + interest + minimum
 
-  def add(b: String, i: String, m: String): Unit = {
-    balance = b
-    interest = i
-    minimum = m
-  }
-
-  def sum = (balance.toDouble + interest.toDouble + minimum.toDouble).toString
-
-  def show = "Balance: %s  Interest: %s  Minimum: %s".format(balance, interest, minimum)
+  override def toString =  
+    "Balance: %s  Interest: %s  Minimum: %s".format(balance, interest, minimum)
 
 }
 
 
+object Loans {
 
+  var count = 1
+  var loans =  List[Loan]() 
+
+
+
+  def sum = 777  
+  def show = 
+    loans.map(_.toString).foldRight("!")(_+"<br/>" + _)    
+
+  def add(b: String, i: String, m: String): Unit = {
+    var tmpLoan = new Loan(count, b.toDouble, i.toDouble, m.toDouble)
+    loans =  tmpLoan :: loans
+    count += count  
+  }
+}
 
 
 

@@ -90,9 +90,9 @@ object LoanInput {
       i <- S.param("interest")
       m <- S.param("minimum")
     } {
-      Loan.add(b, i, m)
+      Loans.add(b, i, m)
 
-      S.notice(Loan.show)
+      S.notice(Loans.show)
       S.redirectTo(w)
     }
   
@@ -103,7 +103,7 @@ object LoanInput {
 
   def calculate_values = 
     "* [onClick]" #> ajaxInvoke(() => {
-      SetHtml("results", Text("Sum of all: %s".format(Loan.sum)))
+      SetHtml("results", Text("Sum of all: %s".format(Loans.show)))
     })
 
 }
