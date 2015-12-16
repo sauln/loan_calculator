@@ -2,14 +2,18 @@ package code
 package model
 
 
-
+import Loan._
 /**
  * This object captures the idea of various repayment strategies.
  * Will probably be refactored many more times.
  */
+
+
+
+/* 
 object Strategy{
 
-  type Strat =  (List[Loan], Double) => List[(Double, Loan)]
+  type Strat =  (List[Loan.Loan], Double) => List[(Double, Loan.Loan)]
   
   // Pay just the minimum on each loan
   def minimum: Strat = {
@@ -31,4 +35,7 @@ object Strategy{
       loans.map(_.min) zip loans
   }
 }
+
+*/
+
 

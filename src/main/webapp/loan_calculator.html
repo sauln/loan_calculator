@@ -1,81 +1,24 @@
 <lift:surround with="default" at="content">
 
 
-This is a scratch pad for working on different methods of the form!
 
-  <div data-lift="Ajax">
+  <!--<div data-lift="Ajax">
     <div id="messages"></div>
-   
+  </div>--> 
 
-   <!--
-      <div id="select">
-         the output is <span id="number"></span> 
-      </div>
-
-
-  <div id="ajaxText">
-    you enetered <span id="value"> </span> in the text box.
-  </div>
-
-    -->
-
-<!--
-<form class="lift:form.ajax">
-<div class="lift:LoanIn">
-  <input type="text" placeholder="Balance" name="balance"/>
-  <input type="text" placeholder="Minum" name="minpayment"/>
-  <input type="text" placeholder="Int Rate" name="interest"/>
-  <input type="submit" value="Add" />  
-</div>
-</form>-->
-
-
-
-
-
-<form data-lift="Plain" action="/loan_calculator" method="post">
-  <input type="text" name="interest" placeholder="What's your name?">
-  <input type="text" name="balance" placeholder="what's your maiden name?">
-  <input type="submit" value="Go">
-</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-  <form class="lift:ScreenExample?form=post">
+  <form data-lift="LoanInput" action="/loan_calculator" method="post">
+    <input type="submit" value="Add">
+    <input type="text" name="interest" placeholder="Interest rate">
+    <input type="text" name="balance" placeholder="Balance">
+    <input type="text" name="minimum" placeholder="Minimum payment">
   </form>
--->
-
-
-<div>
-  <input type="text" placeholder"Balance" id="bal">
-</div>
 
 
   <div>
-    <button data-lift="LoanWiring.calculate_values?div=calculated"> Calculate </button>
+    <button data-lift="LoanInput.calculate_values?div=calculated"> Calculate</button>
   </div>
 
-
-  <div id="calc"</div>
-
-
-    </div>
-
-
-
-  </div>
+  <div id="results"</div>
 
 
 

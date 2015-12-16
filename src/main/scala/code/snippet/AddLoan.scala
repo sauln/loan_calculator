@@ -18,16 +18,14 @@ import js.JsCmds._
 import js.jquery._
 import js.jquery.JqJsCmds._
 
-
-
 import net.liftweb.common.Full
 import net.liftweb.http.S
 import net.liftweb.util.PassThru
-
-
-
-
 import scala.xml.{NodeSeq, Text}
+
+import code.model._
+
+
 
 /**
  * Most of this code has been found from the demo or simple lift sights
@@ -60,31 +58,54 @@ import scala.xml.{NodeSeq, Text}
 
 
 
-
-
-
-object calc {
+/*
+object Loan {
   var balance = ""
   var interest = ""
-  def show = "Balance: %s\nInterest: %s".format(balance, interest)
-
-}
+  var minimum = ""
 
 
-
-object Plain {
-  def render = {
-    
-    (S.param("balance"), S.param("interest"))  match {
-      case (Full(balance), Full(interest)) => {
-        calc.balance = balance
-        calc.interest = interest
-        S.notice("Hello " + calc.show)
-        S.redirectTo("/loan_calculator")
-      }
-      case _ => PassThru
-    }
+  def add(b,i,m): Unit = {
+    balance = b
+    interest = i
+    minimum = m
   }
+
+
+  def sum = (balance.toDouble + interest.toDouble + minimum.toDouble).toString
+
+  def show = "Balance: %s  Interest: %s  Minimum: %s".format(balance, interest, minimum)
+
+}
+*/
+
+object LoanInput {
+  private object whence extends RequestVar(S.referer openOr "/")
+  
+  
+  def render = {
+    val w = whence.is
+    for {
+      b <- S.param("balance")
+      i <- S.param("interest")
+      m <- S.param("minimum")
+    } {
+      Loan.add(b, i, m)
+
+      S.notice(Loan.show)
+      S.redirectTo(w)
+    }
+  
+  
+  PassThru
+  }
+
+
+  def calculate_values = 
+    "* [onClick]" #> ajaxInvoke(() => {
+      SetHtml("results", Text("Sum of all: %s".format(Loan.sum)))
+    })
+
 }
 
 
@@ -105,13 +126,7 @@ object Plain {
 
 
 
-
-
-case class Loan(guid: String, 
-                name: String, 
-                balance: Double, 
-                interest_rate: Double, 
-                minimum: Double)
+/*
 
 
 object LoanIn {
@@ -155,9 +170,9 @@ object LoanIn {
   }
 }
 
+*/
 
-
-
+/*
 class Ajax extends Loggable {
 
 
@@ -206,14 +221,17 @@ class Ajax extends Loggable {
   }
 }
 
+*/
 
-
-
+/*
 class LoanWiring {
-
+*/
   /**
    * define the relationships amoung items
    */
+
+
+/*
   private object Info {
     val loans = ValueCell(List(newLoan))//declares a new line
 
@@ -238,24 +256,21 @@ class LoanWiring {
       SetHtml("calc", Text(balance))
     })
 
-
+*/
 
   /**
    * draw all the input lines
    */
-  def showLoans = "* *" #> (Info.loans.get.flatMap(renderLoan): NodeSeq)
+
+
+//def showLoans = "* *" #> (Info.loans.get.flatMap(renderLoan): NodeSeq)
 
   /**
    * add a line to the input
    */
-
-
-  
-  def addLoan = 
+/*  def addLoan = 
     "* [onclick]" #> ajaxInvoke(() =>
       JqJsCmds.AppendHtml("loan_inputs", renderLoan(appendLoan)))
-
-
 
   private def renderLoan(theLoan: Loan): NodeSeq = {
     import theLoan._
@@ -275,7 +290,7 @@ class LoanWiring {
     </div>
   }
 
-  private def newLoan = Loan(nextFuncName, "name", 0, 0,0)
+  //private def newLoan = Loan(nextFuncName, "name", 0, 0,0)
 
   //private def cutLastLoan: Loan = {
   //  val kept= Info.loans.dropRight(1)
@@ -286,12 +301,12 @@ class LoanWiring {
     Info.loans.set(ret :: Info.loans.get)
     ret
   }
-
+*/
   /**
    * Mutate a line and update the info field
    */
 
-  private def mutateLoan(guid: String)(f: Loan => Loan) {
+/*  private def mutateLoan(guid: String)(f: Loan => Loan) {
     val all = Info.loans.get
     val head = all.filter(_.guid == guid).map(f)
     val rest = all.filter(_.guid != guid)
@@ -310,5 +325,6 @@ class LoanWiring {
     str => {asDouble(str).foreach(in)}
 }
 
+*/
 
 

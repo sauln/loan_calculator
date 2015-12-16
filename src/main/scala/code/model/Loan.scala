@@ -14,6 +14,34 @@ package model
  *
  */
 
+
+
+
+
+object Loan {
+  var balance = ""
+  var interest = ""
+  var minimum = ""
+
+
+  def add(b: String, i: String, m: String): Unit = {
+    balance = b
+    interest = i
+    minimum = m
+  }
+
+  def sum = (balance.toDouble + interest.toDouble + minimum.toDouble).toString
+
+  def show = "Balance: %s  Interest: %s  Minimum: %s".format(balance, interest, minimum)
+
+}
+
+
+
+
+
+
+/*
 class Loan(i: Double, b: Double, m: Double){
   val min = m
   val balance = b
@@ -30,7 +58,7 @@ class Loan(i: Double, b: Double, m: Double){
     current_Loan
   }
 }
-
+*/
 
 
 
