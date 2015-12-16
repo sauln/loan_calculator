@@ -19,16 +19,36 @@ This is a scratch pad for working on different methods of the form!
 
     -->
 
-
+<!--
 <form class="lift:form.ajax">
 <div class="lift:LoanIn">
   <input type="text" placeholder="Balance" name="balance"/>
-  <input type="text" placeholder="Minimum" name="minpayment"/>
-  <input type="text" placeholder="Interest Rate" name="interest"/>
+  <input type="text" placeholder="Minum" name="minpayment"/>
+  <input type="text" placeholder="Int Rate" name="interest"/>
   <input type="submit" value="Add" />  
-      <!-- I can't figure out what gets called when I push this??-->
 </div>
+</form>-->
+
+
+
+
+
+<form data-lift="Plain" action="/loan_calculator" method="post">
+  <input type="text" name="interest" placeholder="What's your name?">
+  <input type="text" name="balance" placeholder="what's your maiden name?">
+  <input type="submit" value="Go">
 </form>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

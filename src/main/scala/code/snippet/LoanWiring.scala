@@ -18,6 +18,15 @@ import js.JsCmds._
 import js.jquery._
 import js.jquery.JqJsCmds._
 
+
+
+import net.liftweb.common.Full
+import net.liftweb.http.S
+import net.liftweb.util.PassThru
+
+
+
+
 import scala.xml.{NodeSeq, Text}
 
 /**
@@ -51,6 +60,53 @@ import scala.xml.{NodeSeq, Text}
 
 
 
+
+
+
+object calc {
+  var balance = ""
+  var interest = ""
+  def show = "Balance: %s\nInterest: %s".format(balance, interest)
+
+}
+
+
+
+object Plain {
+  def render = {
+    
+    (S.param("balance"), S.param("interest"))  match {
+      case (Full(balance), Full(interest)) => {
+        calc.balance = balance
+        calc.interest = interest
+        S.notice("Hello " + calc.show)
+        S.redirectTo("/loan_calculator")
+      }
+      case _ => PassThru
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 case class Loan(guid: String, 
                 name: String, 
                 balance: Double, 
@@ -73,11 +129,17 @@ object LoanIn {
 
 
     def process(): JsCmd = {
-      
+
+      //var first_loan = Loan("123", "first_loan", 
+      //                      balance.toDouble, 
+      //                      interest.toDouble, 
+      //                      minimum.toDouble)
+
+
       S.notice("Balance: "+balance)
       S.notice("Interest: "+interest)
-
-      Thread.sleep(500)        
+      //S.notice("minimum: " + first_loan.minimum)
+      //Thread.sleep(500)        
     }
     
 
@@ -85,9 +147,11 @@ object LoanIn {
     //"name=minpayment" #> SHtml.onSubmit(minpayment= _ ) &
     //"name=interest" #> SHtml.onSubmit(interest= _ )
 
+    //"type=submit" 
+
     "name=minimum" #> SHtml.text(minimum, minimum = _) &
     "name=balance" #> SHtml.text(balance, balance = _ ) &
-    "name=interest" #> (SHtml.text(interest, interest = _) ++ SHtml.hidden(process))
+    "name=interest" #> (SHtml.text(interest, interest = _)  ++ SHtml.hidden(process))
   }
 }
 
