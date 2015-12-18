@@ -2,6 +2,21 @@ package code
 package model
 
 
+import net.liftweb.common._
+import net.liftweb._
+import http._
+import SHtml._
+import util._
+import Helpers._
+import js._
+import js.JsCmds._
+import js.jquery._
+import js.jquery.JqJsCmds._
+
+import net.liftweb.common.Full
+import net.liftweb.http.S
+import net.liftweb.util.PassThru
+import scala.xml.{NodeSeq, Text, XML}
 
 
 /**
@@ -18,19 +33,19 @@ package model
 //case class Loan(val guid: Int, val balance: Double, val interest: Double, val minimum: Double) 
 
 
-class Loan (guid: Int, balance: Double, interest: Double, minimum: Double){
-  //def apply(guid: Int, balance: Double, interest: Double, minimum: Double) =
-  //  new Loan(guid, balance, interest, minimum)
-  //val guid = guid
-  //val balance = balance
-  //val interest = interest
-  //val minimum = minimum
-
-
-
+class Loan (guid: Int, balance: Double, interest: Double, minimum: Double) {
 
   def sum: Double = 
     balance + interest + minimum
+
+
+  def putXML: NodeSeq = {
+    <div>
+      <string> Balance: {balance} Interest: {interest} Minimum: {minimum} </string>
+      <br/>
+    </div>
+
+  }
 
   override def toString =  
     "Balance: %s  Interest: %s  Minimum: %s".format(balance, interest, minimum)
@@ -44,16 +59,20 @@ object Loans {
   var loans =  List[Loan]() 
 
 
+  def SOMEVALUE = 12345
+  
 
-  def sum = 777  
-  def show = 
-    loans.map(_.toString).foldRight("!")(_+"<br/>" + _)    
+  def show = { 
+    loans.flatMap(_.putXML)
+
+  }
 
   def add(b: String, i: String, m: String): Unit = {
     var tmpLoan = new Loan(count, b.toDouble, i.toDouble, m.toDouble)
     loans =  tmpLoan :: loans
     count += count  
   }
+
 }
 
 

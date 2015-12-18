@@ -21,7 +21,9 @@ import js.jquery.JqJsCmds._
 import net.liftweb.common.Full
 import net.liftweb.http.S
 import net.liftweb.util.PassThru
-import scala.xml.{NodeSeq, Text}
+import scala.xml.{NodeSeq, Text, XML}
+
+
 
 import code.model._
 
@@ -103,7 +105,28 @@ object LoanInput {
 
   def calculate_values = 
     "* [onClick]" #> ajaxInvoke(() => {
-      SetHtml("results", Text("Sum of all: %s".format(Loans.show)))
+
+      //var loan1 = Loan(123,234,345,456)
+
+      //var xml: NodeSeq = List(loan1).flatMap{
+      //  case Loan(a,b,c,d) => "Summary:"
+      //                        <string>{a.toString}</string> <br/> 
+      //                        <string>{b.toString}</string> <br/>
+      //                        <string>{c.toString}</string> <br/>
+      //                        <string>{d.toString}</string> 
+      //}
+
+      //val xml: NodeSeq = <string> WOW </string> <br/>
+      //                   <string> NEW LINE </string> <br/>
+
+
+      val xml: NodeSeq = Loans.show
+
+
+
+      //SetHtml("results", Text("Sum of all: %s".format(Loans.show)))
+      SetHtml("results", xml )
+    
     })
 
 }
