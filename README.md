@@ -7,32 +7,36 @@ This will be the first larger project I undertake in Scala and is entirely a lea
 
 ##Parts:
   * linear programming algorithm
-    * though the problem is simple enough to not need a full linear programming algorithm, I would like to phrase the problem to use a custom linear programming algorithm and one using one found in a common library.
-  * multiple strategies
-    * two coined strategies are:
-      * snowball - pay off smallest loan first
-      * avalanche - pay off highest interest rate first
+    * though the problem turned out to be simple enough to not need linear programming, it was in pursuit of learning the simplex algorithm that I chose this project
+  * multiple payoff strategies
+    * snowball - pay off smallest loan first
+    * avalanche - pay off highest interest rate first
     * fastest payoff - this could require a linear programming algorithm
-    * pay the lowest amount - this can be shown to be equivalent to the avalanche method via the linear programming algorithm.
-  * nice looking front end 
-  * comprehensive testing 
+    * pay the lowest amount - 
+  * nice looking front end
+    * def the hardest part
+  * comprehensive testing
+  * visualization dashboard 
+    * dynamic pie chart of loans
+    * visualizations relevant to different strategies
+
 
 ## Learning I want out of this project
-  * Get a grip on Scala - actually the smallest part of this project
-  * Get a grip on functional programming 
-  * Get a grip on testing - this is difficult to incorporate when I'm learning so many other aspects.  
-  * Get a grip on a web framework - Use lift
-
-
+  * Gain experience with Scala 
+  * Get comfortable with functional programming design
+  * Understand view-first and use lift
 
 
 ## TODO
-  * Develop forms in lift
-    * how to get access to data?
-    * restructure page so it looks better
-    * dynamically allow more loan inputs
-  * figure out this testing - choose a library - ask at PDXScala 
+  * Add visualization support
+    * what libraries?
+      * wookietreiber/scala-chart is a wrapper for JFreeChart
 
+  * Add option to remove/edit loans
+  * Use widgets? based on jQuery widgets
+    * TableSorter could be good display of loans
+  * Integrate calculations!
+  * Buttons to select strategy
 
 
 
