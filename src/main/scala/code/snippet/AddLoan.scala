@@ -87,13 +87,26 @@ object LoanInput {
   
   def render = {
     val w = whence.is
+    
+    
     for {
       b <- S.param("balance")
       i <- S.param("interest")
       m <- S.param("minimum")
     } {
       Loans.add(b, i, m)
+      
+      
+      
+      val xml: NodeSeq = Loans.show
+      SetHtml("results", xml )
+      
+      
+      
+      
+      //ajaxInvoke(() => {SetHtml("results", Text("WOWZERERSZZ") ) }) 
 
+      //S.warning(Loans.show)
       S.notice(Loans.show)
       S.redirectTo(w)
     }
@@ -101,6 +114,27 @@ object LoanInput {
   
   PassThru
   }
+
+
+  def add_loans = 
+   "* [onClick]" #> ajaxInvoke(() => {
+      
+      /*
+      for {
+        b <- S.param("balance")
+        i <- S.param("interest")
+        m <- S.param("minimum")
+      } {
+        Loans.add(b, i, m)
+        S.notice(Loans.show)
+      }
+      */
+      val xml: NodeSeq = Loans.show
+
+      SetHtml("results", xml )
+      //S.redirectTo(w)
+    })
+
 
 
   def calculate_values = 
@@ -120,9 +154,7 @@ object LoanInput {
       //                   <string> NEW LINE </string> <br/>
 
 
-      val xml: NodeSeq = Loans.show
-
-
+      val xml: NodeSeq = Loans.sum
 
       //SetHtml("results", Text("Sum of all: %s".format(Loans.show)))
       SetHtml("results", xml )

@@ -60,7 +60,16 @@ object Loans {
 
 
   def SOMEVALUE = 12345
-  
+
+  def sum = {
+    
+    <div>
+    <string> {loans.map(_.sum).foldLeft(0.0)(_+_).toString} </string>
+    </div>
+
+  }
+
+
 
   def show = { 
     loans.flatMap(_.putXML)
