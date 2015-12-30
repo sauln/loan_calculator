@@ -35,7 +35,6 @@ import code.model._
  * also, it seems much of what I have to learn is actually jQuery, not Scala.
  */
 
-
 /**
  * WANT:  An input line for a loan
  *        when one loan is input, a new line appears
@@ -44,50 +43,20 @@ import code.model._
  *        the payoff results for the loans and given strategy is calculated and displayed.
  */
 
-
-
-
 /**
- * I think that wiring is unnecessary - the example was good, but I want to be able to 
- * add a new line via ajax without the page refreshing everything a field is updated.
- * I believe I have to dig deeper into JavaScript to do this.  
- * 
- * Idea - when button is pushed, pull data into an object that is maintained per user
+ * WANT:  when button is pushed, pull data into an object that is maintained per user
  *        also generate new line of input data and turn input fields where loan was input 
  *        into display values.
- *        
  */
 
 
 
-/*
-object Loan {
-  var balance = ""
-  var interest = ""
-  var minimum = ""
-
-
-  def add(b,i,m): Unit = {
-    balance = b
-    interest = i
-    minimum = m
-  }
-
-
-  def sum = (balance.toDouble + interest.toDouble + minimum.toDouble).toString
-
-  def show = "Balance: %s  Interest: %s  Minimum: %s".format(balance, interest, minimum)
-
-}
-*/
 
 object LoanInput {
   private object whence extends RequestVar(S.referer openOr "/")
   
-  
   def render = {
     val w = whence.is
-    
     
     for {
       b <- S.param("balance")
@@ -96,17 +65,9 @@ object LoanInput {
     } {
       Loans.add(b, i, m)
       
-      
-      
       val xml: NodeSeq = Loans.show
       SetHtml("results", xml )
       
-      
-      
-      
-      //ajaxInvoke(() => {SetHtml("results", Text("WOWZERERSZZ") ) }) 
-
-      //S.warning(Loans.show)
       S.notice(Loans.show)
       S.redirectTo(w)
     }
@@ -118,268 +79,16 @@ object LoanInput {
 
   def add_loans = 
    "* [onClick]" #> ajaxInvoke(() => {
-      
-      /*
-      for {
-        b <- S.param("balance")
-        i <- S.param("interest")
-        m <- S.param("minimum")
-      } {
-        Loans.add(b, i, m)
-        S.notice(Loans.show)
-      }
-      */
       val xml: NodeSeq = Loans.show
-
       SetHtml("results", xml )
       //S.redirectTo(w)
     })
 
-
-
   def calculate_values = 
     "* [onClick]" #> ajaxInvoke(() => {
-
-      //var loan1 = Loan(123,234,345,456)
-
-      //var xml: NodeSeq = List(loan1).flatMap{
-      //  case Loan(a,b,c,d) => "Summary:"
-      //                        <string>{a.toString}</string> <br/> 
-      //                        <string>{b.toString}</string> <br/>
-      //                        <string>{c.toString}</string> <br/>
-      //                        <string>{d.toString}</string> 
-      //}
-
-      //val xml: NodeSeq = <string> WOW </string> <br/>
-      //                   <string> NEW LINE </string> <br/>
-
-
-      val xml: NodeSeq = Loans.sum
-
-      //SetHtml("results", Text("Sum of all: %s".format(Loans.show)))
+      val xml: NodeSeq = Loans.show_sum
       SetHtml("results", xml )
-    
     })
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-object LoanIn {
-  case class LoanItem(balance: String, minpayment: String, interest: String)
-  def render = {
-    var balance = ""
-    var minimum = ""
-    var interest = ""
-
-    val whence = S.referer openOr "/"
-
-
-    
-
-
-
-    def process(): JsCmd = {
-
-      //var first_loan = Loan("123", "first_loan", 
-      //                      balance.toDouble, 
-      //                      interest.toDouble, 
-      //                      minimum.toDouble)
-
-
-      S.notice("Balance: "+balance)
-      S.notice("Interest: "+interest)
-      //S.notice("minimum: " + first_loan.minimum)
-      //Thread.sleep(500)        
-    }
-    
-
-    //"name=balance" #> SHtml.onSubmit(balance= _ ) &
-    //"name=minpayment" #> SHtml.onSubmit(minpayment= _ ) &
-    //"name=interest" #> SHtml.onSubmit(interest= _ )
-
-    //"type=submit" 
-
-    "name=minimum" #> SHtml.text(minimum, minimum = _) &
-    "name=balance" #> SHtml.text(balance, balance = _ ) &
-    "name=interest" #> (SHtml.text(interest, interest = _)  ++ SHtml.hidden(process))
-  }
-}
-
-*/
-
-/*
-class Ajax extends Loggable {
-
-
-  def render = {
-    var cnt = 0
-
-
-    //add a loan entry
-
-    
-
-
-    def doClicker(in: NodeSeq) = a(() => {
-      cnt = cnt + 1;
-      SetHtml("count", Text(cnt.toString))
-    }, in)
-
-
-    def doSelect(in: NodeSeq) = ajaxSelect(
-      List("dog", "cow", "pig").map(i => (i.toString, i.toString)),
-      Full("dog"),
-      v => DisplayMessage("messages", ("#number" #> Text(v)).apply(in), 5 seconds, 1 second))
-
-
-    def doText(in: NodeSeq) = ajaxText("", v => DisplayMessage("messages", ("#value" #>
-      Text(v)).apply(in), 4 seconds, 1 second))
-
-    "#clicker" #> doClicker _ &
-      "#select" #> doSelect _ &
-      "#ajaxText" #> doText _
-
-  }
-
-
-  private def buildQuery(current: String, limit: Int): Seq[String] = {
-    logger.info("Checking on server side with " + current + " limit " + limit)
-    (1 to limit).map(n => current + "" + n)
-  }
-
-  def buttonClick = {
-    import js.JE._
-    "* [onclick]" #> SHtml.ajaxCall(ValById("the_input"),
-    s => SetHtml("messages", <i> Text box is 
-      {s}
-    </i>))
-  }
-}
-
-*/
-
-/*
-class LoanWiring {
-*/
-  /**
-   * define the relationships amoung items
-   */
-
-
-/*
-  private object Info {
-    val loans = ValueCell(List(newLoan))//declares a new line
-
-
-    //val loans = List(newLoan)
-
-    //val taxRate = ValueCell(0.05d)//sets default taxRate
-    //val subtotal = loans.lift(_.foldLeft(0d)(_ + _.balance))
-    //val interest = loans.lift(_.foldLeft(0d)
-    //               {case (a, b) => a + (b.balance * b.interest_rate)})
-    //val total   = subtotal.lift(interest) {_ * _}
-
-  }
-
-
-
-  def calculate_values = 
-    "* [onClick]" #> ajaxInvoke(() => {
-      
-      val balance = S.param("bal") openOr "no input"
-
-      SetHtml("calc", Text(balance))
-    })
-
-*/
-
-  /**
-   * draw all the input lines
-   */
-
-
-//def showLoans = "* *" #> (Info.loans.get.flatMap(renderLoan): NodeSeq)
-
-  /**
-   * add a line to the input
-   */
-/*  def addLoan = 
-    "* [onclick]" #> ajaxInvoke(() =>
-      JqJsCmds.AppendHtml("loan_inputs", renderLoan(appendLoan)))
-
-  private def renderLoan(theLoan: Loan): NodeSeq = {
-    import theLoan._
-
-    <div id={guid}>
-    {ajaxText(name, s => mutateLoan(guid)(_.copy(name = s)))}
-
-    {ajaxText(balance.toString,
-                (d: Double) => mutateLoan(guid) {_.copy(balance = d)})}
-
-    {ajaxText(interest_rate.toString,
-                (d: Double) => mutateLoan(guid) {_.copy(interest_rate = d)})}
-    
-    {ajaxText(minimum.toString,
-                (d: Double) => mutateLoan(guid) {_.copy(minimum = d)})}
-    
-    </div>
-  }
-
-  //private def newLoan = Loan(nextFuncName, "name", 0, 0,0)
-
-  //private def cutLastLoan: Loan = {
-  //  val kept= Info.loans.dropRight(1)
-  //}
-
-  private def appendLoan: Loan = {
-    val ret = newLoan
-    Info.loans.set(ret :: Info.loans.get)
-    ret
-  }
-*/
-  /**
-   * Mutate a line and update the info field
-   */
-
-/*  private def mutateLoan(guid: String)(f: Loan => Loan) {
-    val all = Info.loans.get
-    val head = all.filter(_.guid == guid).map(f)
-    val rest = all.filter(_.guid != guid)
-    Info.loans.set(head ::: rest)
-  }
-
-
-  // convert a Double to a NodeSeq
-  private def doubleDraw: (Double, NodeSeq) => NodeSeq =
-    (d, ns) => Text(java.text.NumberFormat.getCurrencyInstance.format(d))
-
-
-  // "helpful implicit conversions
-  private implicit def unitToJsCmd(in: Unit): JsCmd = Noop
-  private implicit def doubleToJsCmd(in: Double => Any): String => JsCmd =
-    str => {asDouble(str).foreach(in)}
-}
-
-*/
 
 
