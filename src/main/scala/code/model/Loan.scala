@@ -29,6 +29,10 @@ import scala.xml.{NodeSeq, Text, XML}
 
 class Loan (guid: Int, balance: Double, interest: Double, minimum: Double) {
 
+
+	var compound_var = 12
+
+
   def sum: Double = 
     balance + interest + minimum
 
@@ -45,6 +49,9 @@ class Loan (guid: Int, balance: Double, interest: Double, minimum: Double) {
 }
 
 
+
+
+/* rename Loans to portfolio */
 object Loans {
 
   var count = 1

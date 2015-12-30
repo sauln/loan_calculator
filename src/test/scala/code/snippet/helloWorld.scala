@@ -1,5 +1,5 @@
 package code
-package model
+package snippet
 
 import net.liftweb._
 import http._
@@ -19,7 +19,7 @@ import org.specs2.execute.Result
 
 
 
-object LoanSpecs2Spec extends Specification with AroundExample {
+object snipSpecs2Spec extends Specification with AroundExample {
 	val session = new LiftSession("", randomString(20), Empty)
 	val stableTime = now
 
@@ -41,7 +41,8 @@ object LoanSpecs2Spec extends Specification with AroundExample {
 
 	"an empty loan" should {
 		"acrue no interest" in {
-			val o = Loan(0,0,0)
+			val o = 5
+			
 		}
 	}
 

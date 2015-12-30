@@ -23,8 +23,6 @@ import net.liftweb.http.S
 import net.liftweb.util.PassThru
 import scala.xml.{NodeSeq, Text, XML}
 
-
-
 import code.model._
 
 
