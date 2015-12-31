@@ -27,24 +27,25 @@ import scala.xml.{NodeSeq, Text, XML}
  * How do I capture state in a functional way?
  */
 
-class Loan (guid: Int, balance: Double, interest: Double, minimum: Double) {
+class Loan(guid: Int, bal: Double, interest_rate: Double, minimum: Double) {
 
 
 	var compound_var = 12
 
 
-  def sum: Double = 
-    balance + interest + minimum
+	def balance = bal
+
+	def interest = balance * (interest_rate/compound_var)
 
   def putXML: NodeSeq = {
     <div>
-      <string> Balance: {balance} Interest: {interest} Minimum: {minimum} </string>
+      <string> Balance: {balance} Interest rate: {interest_rate} Minimum: {minimum} </string>
       <br/>
     </div>
   }
 
   override def toString =  
-    "Balance: %s  Interest: %s  Minimum: %s".format(balance, interest, minimum)
+    "Balance: %s  Interest rate: %s  Minimum: %s".format(balance, interest_rate, minimum)
 
 }
 
@@ -60,12 +61,13 @@ object Loans {
   def SOMEVALUE = 12345
 
 
-	def sum = { loans.map(_.sum).foldLeft(0.0)(_+_) }
+	def sum = { loans.map(_.balance).foldLeft(0.0)(_+_) }
 
 
   def show_sum = {
     <div>
-    	<string> {sum.toString} </string>
+    	<string> Total debt: {sum.toString} </string><br/>
+			<string> Interest: {loans.map(_.interest).foldLeft(0.0)(_+_).toString } </string>
     </div>
   }
 

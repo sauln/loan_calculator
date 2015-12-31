@@ -19,19 +19,7 @@ import org.specs2.execute.Result
 
 
 
-object LoanSpecs2Spec extends Specification with AroundExample {
-	val session = new LiftSession("", randomString(20), Empty)
-	val stableTime = now
-
-	def around[T <% Result](body: =>T) = {
-		S.initIfUninitted(session) {
-			DependencyFactory.time.doWith(stableTime) {
-				body // execute t inside a http session
-			}
-		}
-	}
-
-
+object LoanSpec extends Specification{
 
 	"this test" should {
 		"always pass" in {
@@ -41,7 +29,9 @@ object LoanSpecs2Spec extends Specification with AroundExample {
 
 	"an empty loan" should {
 		"acrue no interest" in {
+			//how do I get Loan in?
 			val o = Loan(0,0,0)
+
 		}
 	}
 
