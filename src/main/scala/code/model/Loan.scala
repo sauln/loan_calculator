@@ -29,12 +29,8 @@ import scala.xml.{NodeSeq, Text, XML}
 
 class Loan(guid: Int, bal: Double, interest_rate: Double, minimum: Double) {
 
-
 	var compound_var = 12
-
-
 	def balance = bal
-
 	def interest = balance * (interest_rate/compound_var)
 
   def putXML: NodeSeq = {
@@ -58,11 +54,7 @@ object Loans {
   var count = 1
   var loans =  List[Loan]() 
 
-  def SOMEVALUE = 12345
-
-
 	def sum = { loans.map(_.balance).foldLeft(0.0)(_+_) }
-
 
   def show_sum = {
     <div>

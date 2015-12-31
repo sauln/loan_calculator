@@ -60,33 +60,31 @@ object LoanInput {
       b <- S.param("balance")
       i <- S.param("interest")
       m <- S.param("minimum")
+
     } {
       Loans.add(b, i, m)
       
-      val xml: NodeSeq = Loans.show
+      var xml: NodeSeq = Loans.show
       SetHtml("results", xml )
       
-      S.notice(Loans.show)
+      //S.notice(Loans.show)
       S.redirectTo(w)
     }
-  
-  
   PassThru
   }
 
-
   def add_loans = 
    "* [onClick]" #> ajaxInvoke(() => {
-      val xml: NodeSeq = Loans.show
-      SetHtml("results", xml )
+			var xml: NodeSeq = Loans.show
+      SetHtml("summary", xml )
       //S.redirectTo(w)
     })
 
   def calculate_values = 
     "* [onClick]" #> ajaxInvoke(() => {
-      val xml: NodeSeq = Loans.show_sum
+      var xml: NodeSeq = Loans.show_sum
       SetHtml("results", xml )
-    })
+})
 }
 
 

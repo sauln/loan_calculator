@@ -7,7 +7,7 @@
   </div>--> 
 
   <form data-lift="LoanInput" action="/loan_calculator" method="post">
-    <input data-lift="LoanInput.calculate_values?div=calculated"  type="submit" value="Add">
+    <input data-lift="LoanInput.calculate_values?div=calculated1"  type="submit" value="Add">
     <input type="text" name="balance" placeholder="Balance">
     <input type="text" name="minimum" placeholder="Minimum payment">
     <input type="text" name="interest" placeholder="Interest rate">
@@ -15,12 +15,17 @@
 
 
   <div>
-    <button data-lift="LoanInput.add_loans?div=calculated"> try adding a loan</button>
+    <button data-lift="LoanInput.add_loans?div=calculated2"> [Separate] Add loan</button>
   </div>
-  <div>
-    <button data-lift="LoanInput.calculate_values?div=calculated"> Calculate</button>
-  </div>
+  <!--<div>
+    <button data-lift="LoanInput.calculate_values?div=calculated3"> Calculate</button>
+  </div>-->
 
+
+
+
+
+	<div id="summary"</div>
   <div id="results"</div>
 
 
