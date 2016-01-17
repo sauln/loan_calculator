@@ -26,4 +26,7 @@ sandbox/
 *.db
 
 
-
+##django stuff
+__pycache__
+*.pyc
+migrations/
