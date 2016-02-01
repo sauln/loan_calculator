@@ -16,7 +16,7 @@ def loancalc_page(request):
 		loans = Loan.objects.all()
 		print(loans)
 		
-		return redirect('/loancalc/add_element', {'loans': loans})
+		return redirect('/loancalc/', {'loans': loans})
 
 	loans = Loan.objects.all()
 

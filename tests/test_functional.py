@@ -42,7 +42,7 @@ class NewVisitorTest(LiveServerTestCase):
 		inputbox_min.send_keys(100)
 
 		self.browser.find_element_by_id("add").click()
-		self.check_for_row_in_list_table('$12,000')
+		self.check_for_row_in_list_table('$12,000.00')
 
 		edith_list_url = self.browser.current_url
 		self.assertRegex(edith_list_url, '/loancalc/.+')
