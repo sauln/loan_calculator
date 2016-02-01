@@ -9,4 +9,3 @@ class LoanCalcTest(TestCase):
 		self.assertEqual(found.func, loancalc_page)
 
 
-
