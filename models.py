@@ -5,5 +5,3 @@ class Loan(models.Model):
 	interest_rate = models.FloatField()
 	minimum_payment = models.FloatField()
 
-
-
