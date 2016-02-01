@@ -39,6 +39,29 @@ Contents of the loan calculator application
 </ul>
 
 
+
+<form method="post" action="">
+
+	{{ formset.management_form }}
+
+	{% for form in formset %}
+		{{ form.id }}
+		<ul type="none">
+			<li>{{ form.balance.label_tag }}{{ form.balance }}</li>
+			<li>{{ form.interest_rate.label_tag }}{{ form.interest_rate }}</li>
+			<li>{{ form.minimum_payment.label_tag }}{{ form.minimum_payment }}</li>
+		</ul>
+	{% endfor %}
+
+	{% csrf_token %}
+ 	<input type="submit" name="generate" 
+  		value="Generate Text" id="gen" class="btn btn-primary">
+
+</form>
+
+
+
+
 2nd order:
 <ul>
 <li>options for different payout strategies</li>

@@ -16,8 +16,8 @@ class Loan(models.Model):
 	interest_rate = models.DecimalField(max_digits=10, decimal_places=6)
 	minimum_payment = models.DecimalField(max_digits=5, decimal_places=2)
 
-class LoanForm(ModelForm):
-	class Meta:
-		model = Loan
-		fields = ['balance', 'interest_rate', 'minimum_payment']
+#class LoanForm(ModelForm):
+#	class Meta:
+#		model = Loan
+#		fields = ['balance', 'interest_rate', 'minimum_payment']
 
