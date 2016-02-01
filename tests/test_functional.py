@@ -14,8 +14,7 @@ class NewVisitorTest(LiveServerTestCase):
 		table = self.browser.find_element_by_id('id_loan_table')
 		rows = table.find_elements_by_tag_name('tr')
 		self.assertIn(row_text, [row.text for row in rows])
-	
-	
+
 	def test_user_goes_loan_calculator_page(self):
 		#see we are going to the Loan Calculator site
 		self.browser.get(self.live_server_url+"/loancalc")

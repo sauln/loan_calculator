@@ -49,8 +49,11 @@ Contents of the loan calculator application
 		value="Add Loan" id="add" class="btn btn-primary">
 </form>
 
-<table id="id_loan_table">
-	<th>ID </th>
+<br><br>
+
+{% if loans %}
+<table id="id_loan_table" class="table">
+	<th>ID</th>
 	<th>Balance</th>
 	<th>Interest Rate</th>
 	<th>Minimum Payment</th>
@@ -64,7 +67,7 @@ Contents of the loan calculator application
 		</tr>
 	{% endfor %}
 </table>
-
+{% endif %}
 
 
 2nd order:
