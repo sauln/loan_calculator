@@ -2,7 +2,6 @@
 
 This project is a small loan calculator that will compute the optimal payback scenario given user defined loans and chosen strategy.
 
-This will be the first larger project I undertake in Scala and is entirely a learning experience.
 
 
 ##Parts:
@@ -21,31 +20,12 @@ This will be the first larger project I undertake in Scala and is entirely a lea
     * visualizations relevant to different strategies
 
 
-## Learning I want out of this project
-  * Gain experience with Scala 
-  * Get comfortable with functional programming design
-  * Understand view-first and use lift
-
-
 ## TODO
-  * Add visualization support
-    * what libraries?
-      * wookietreiber/scala-chart is a wrapper for JFreeChart
-
-  * Add option to remove/edit loans
-  * Use widgets? based on jQuery widgets
-    * TableSorter could be good display of loans
-  * Integrate calculations!
-  * Buttons to select strategy
-
-
-
-
-
-
-
-
-
+-[ ] Have db not save for too long - (between users?)
+-[ ] Calculate loan summaries
+-[ ] Display pie chart - use D3
+-[ ] Put html in gridded layout
+-[ ] Save loan stack for users
 
 
 
