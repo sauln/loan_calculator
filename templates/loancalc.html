@@ -39,26 +39,31 @@ Contents of the loan calculator application
 </ul>
 
 
-
-<form method="post" action="">
-
-	{{ formset.management_form }}
-
-	{% for form in formset %}
-		{{ form.id }}
-		<ul type="none">
-			<li>{{ form.balance.label_tag }}{{ form.balance }}</li>
-			<li>{{ form.interest_rate.label_tag }}{{ form.interest_rate }}</li>
-			<li>{{ form.minimum_payment.label_tag }}{{ form.minimum_payment }}</li>
-		</ul>
-	{% endfor %}
-
+<form method="POST">
+	<input name="balance" id="id_balance" placeholder="Balance" />
+	<input name="interest_rate" id="id_interest_rate" placeholder="Interest Rate" />
+	<input name="minimum_payment" id="id_minimum_payment" placeholder="Minimum Payment" />
 	{% csrf_token %}
- 	<input type="submit" name="generate" 
-  		value="Generate Text" id="gen" class="btn btn-primary">
 
+	<input type="submit" name="add_loan" 
+		value="Add Loan" id="add" class="btn btn-primary">
 </form>
 
+<table id="id_loan_table">
+	<th>ID </th>
+	<th>Balance</th>
+	<th>Interest Rate</th>
+	<th>Minimum Payment</th>
+	{% load loan_formatting %}
+	{% for loan in loans %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ loan.balance | currency }}</td>
+			<td>{{ loan.interest_rate }}</td>
+			<td>${{ loan.minimum_payment }}</td>
+		</tr>
+	{% endfor %}
+</table>
 
 
 

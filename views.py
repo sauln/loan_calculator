@@ -1,19 +1,16 @@
-from django.forms import modelformset_factory
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+
 from loan_calculator.models import Loan
 
-
 def loancalc_page(request):
+	if request.method == 'POST':
+		Loan.objects.create(balance=request.POST["balance"], interest_rate=request.POST["interest_rate"], minimum_payment=request.POST["minimum_payment"])
+		
+		loans = Loan.objects.all()
+		return redirect('/loancalc/add_loan', {'loans': loans})
 
+	loans = Loan.objects.all()
 
-	LoanFormSet = modelformset_factory(Loan, 
-		fields=('balance', 'interest_rate', 'minimum_payment'))
+	return render(request, 'loancalc.html', {'loans': loans})
 	
-	if request.method == "POST":
-		formset = LoanFormSet(request.POST, request.FILES, 
-			queryset=Loan.objects.all()) 
-		if formset.is_valid():
-			formset.save()
-	else:
-		formset = LoanFormSet(queryset=Loan.objects.all()) 
-	return render(request, 'loancalc.html', {'formset': formset})
