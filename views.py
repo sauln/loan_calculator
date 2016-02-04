@@ -3,6 +3,15 @@ from django.http import HttpResponse
 
 from loan_calculator.models import Loan
 
+
+class SummaryStats():
+	def __init__(self, loans):
+		self.total_debt = sum(loan.balance for loan in loans)
+		
+
+
+
+
 def loancalc_page(request):
 	if request.method == 'POST':
 		balance=request.POST["balance"]
@@ -13,7 +22,12 @@ def loancalc_page(request):
 					minimum_payment=minimum_payment)
 		chk.save()	
 		
-	loans = Loan.objects.all()
+	loans = list(Loan.objects.all())
+
+
+	summary = SummaryStats(loans) 
+
+
 	return render(request, 'loancalc.html', {'loans': loans})
 
 	#loans = Loan.objects.all()
