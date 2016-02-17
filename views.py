@@ -24,7 +24,7 @@ def loancalc_page(request):
 					minimum_payment=minimum_payment)
 		chk.save()	
 		
-		return redirect('/loancalc/portfolio/the-only-portfolio/')
+		return redirect('/portfolio/the-only-portfolio/')
 
 
 	#loans = list(Loan.objects.all())
