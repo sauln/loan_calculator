@@ -8,10 +8,26 @@ class SummaryStats():
 	def __init__(self, loans):
 		self.total_debt = sum(loan.balance for loan in loans)
 
-def portfolio_page(request):
+def portfolio_page(request, port_id):
 	loans = list(Loan.objects.all())
-	summary = SummaryStats(loans) 
-	return render(request, 'portfolio.html', {'loans': loans, 'summary':summary})
+	portfolio_ = Portfolio.objects.get(id=port_id)
+	return render(request, 'portfolio.html', {'portfolio': portfolio_})
+
+def add_loan(request, portfolio_id):
+
+	balance=request.POST["balance"]
+	interest_rate=request.POST["interest_rate"]
+	minimum_payment=request.POST["minimum_payment"]
+	
+	portfolio_ = Portfolio.objects.get(id=portfolio_id)
+
+	chk = Loan(balance=balance, 
+				interest_rate=interest_rate, 
+				minimum_payment=minimum_payment,
+				portfolio = portfolio_)
+	chk.save()	
+
+	return redirect('/portfolio/%s/'%(portfolio_.id,))
 
 def new_portfolio(request):
 	balance=request.POST["balance"]
@@ -26,7 +42,7 @@ def new_portfolio(request):
 				portfolio = portfolio_)
 	chk.save()	
 	
-	return redirect('/portfolio/the-only-portfolio/')
+	return redirect('/portfolio/%s/'%(portfolio_.id,))
 
 
 def loancalc_page(request):

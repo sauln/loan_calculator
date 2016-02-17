@@ -31,7 +31,7 @@
 
 The beginning of your portfolio:
 
-<form method="POST" action="/portfolio/new">
+<form method="POST" action="/portfolio/{{ portfolio.id }}/add">
 	<input name="balance" id="id_balance" placeholder="Balance" />
 	<input name="interest_rate" id="id_interest_rate" placeholder="Interest Rate" />
 	<input name="minimum_payment" id="id_minimum_payment" placeholder="Minimum Payment" />
@@ -43,14 +43,13 @@ The beginning of your portfolio:
 
 <br><br>
 
-{% if loans %}
 <table id="id_loan_table" class="table">
 	<th>ID</th>
 	<th>Balance</th>
 	<th>Interest Rate</th>
 	<th>Minimum Payment</th>
 	{% load loan_formatting %}
-	{% for loan in loans %}
+	{% for loan in portfolio.loan_set.all %}
 		<tr>
 			<td>{{ forloop.counter }}</td>
 			<td>{{ loan.balance | currency }}</td>
@@ -59,7 +58,6 @@ The beginning of your portfolio:
 		</tr>
 	{% endfor %}
 </table>
-{% endif %}
 
 
 Total debt: {{ summary.total_debt }}
