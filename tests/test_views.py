@@ -49,8 +49,8 @@ class LoanCalcTest(TestCase):
 		request.POST["minimum_payment"] = 11
 		response = loancalc_page(request)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(response['location'], 'loancalc/portfolio/the-only-portfolio/')
-
+		self.assertEqual(response['location'], '/loancalc/portfolio/the-only-portfolio/')
+		self.assertTemplateUsed(response, 'portfolio.html')
 
 	def test_home_page_can_save_a_POST_request(self):
 		Loan.objects.all().delete()

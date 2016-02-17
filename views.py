@@ -7,8 +7,6 @@ from loan_calculator.models import Loan
 class SummaryStats():
 	def __init__(self, loans):
 		self.total_debt = sum(loan.balance for loan in loans)
-		
-
 
 def portfolio_page(request):
 	loans = list(Loan.objects.all())
