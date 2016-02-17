@@ -5,6 +5,42 @@ from django.http import HttpRequest
 from loan_calculator.views import loancalc_page, SummaryStats
 from loan_calculator.models import Loan
 
+
+
+
+
+class NewPortfolioTest(TestCase):
+	def test_redirects_after_a_POST_request(self):
+		Loan.objects.all().delete()
+
+		request = HttpRequest()
+		request.method = 'POST'
+		request.POST["balance"] = 12345
+		request.POST["interest_rate"] = 0.5
+		request.POST["minimum_payment"] = 11
+		response = loancalc_page(request)
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(response['location'], '/loancalc/portfolio/the-only-portfolio/')
+		self.assertTemplateUsed(response, 'portfolio.html')
+
+	def test_home_page_can_save_a_POST_request(self):
+		Loan.objects.all().delete()
+
+		request = HttpRequest()
+		request.method = 'POST'
+		request.POST["balance"] = 12345
+		request.POST["interest_rate"] = 0.5
+		request.POST["minimum_payment"] = 11
+		response = loancalc_page(request)
+		
+		self.assertEqual(Loan.objects.count(), 1)
+		new_item = Loan.objects.first()
+
+		self.assertEqual(new_item.balance, 12345)
+		self.assertEqual(new_item.interest_rate, 0.5)
+		self.assertEqual(new_item.minimum_payment, 11)
+
+
 class LoanCalcTest(TestCase):
 	def test_loancalc_url_resolves_to_loancalc_view(self):
 		found = resolve('/loancalc/')
@@ -39,35 +75,6 @@ class LoanCalcTest(TestCase):
 		self.assertEqual(first_saved_item.minimum_payment, 5)
 		self.assertEqual(first_saved_item.interest_rate, 2.4)
 	
-	def test_redirects_after_a_POST_request(self):
-		Loan.objects.all().delete()
-
-		request = HttpRequest()
-		request.method = 'POST'
-		request.POST["balance"] = 12345
-		request.POST["interest_rate"] = 0.5
-		request.POST["minimum_payment"] = 11
-		response = loancalc_page(request)
-		self.assertEqual(response.status_code, 302)
-		self.assertEqual(response['location'], '/loancalc/portfolio/the-only-portfolio/')
-		self.assertTemplateUsed(response, 'portfolio.html')
-
-	def test_home_page_can_save_a_POST_request(self):
-		Loan.objects.all().delete()
-
-		request = HttpRequest()
-		request.method = 'POST'
-		request.POST["balance"] = 12345
-		request.POST["interest_rate"] = 0.5
-		request.POST["minimum_payment"] = 11
-		response = loancalc_page(request)
-		
-		self.assertEqual(Loan.objects.count(), 1)
-		new_item = Loan.objects.first()
-
-		self.assertEqual(new_item.balance, 12345)
-		self.assertEqual(new_item.interest_rate, 0.5)
-		self.assertEqual(new_item.minimum_payment, 11)
 
 	def test_home_page_returns_correct_html(self):
 		request = HttpRequest()

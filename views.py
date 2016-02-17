@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from loan_calculator.models import Loan
+from loan_calculator.models import Loan, Portfolio
 
 
 class SummaryStats():
@@ -13,18 +13,33 @@ def portfolio_page(request):
 	summary = SummaryStats(loans) 
 	return render(request, 'portfolio.html', {'loans': loans, 'summary':summary})
 
+def new_portfolio(request):
+	balance=request.POST["balance"]
+	interest_rate=request.POST["interest_rate"]
+	minimum_payment=request.POST["minimum_payment"]
+	
+	portfolio_ = Portfolio.objects.create()
+
+	chk = Loan(balance=balance, 
+				interest_rate=interest_rate, 
+				minimum_payment=minimum_payment,
+				portfolio = portfolio_)
+	chk.save()	
+	
+	return redirect('/portfolio/the-only-portfolio/')
+
 
 def loancalc_page(request):
-	if request.method == 'POST':
-		balance=request.POST["balance"]
-		interest_rate=request.POST["interest_rate"]
-		minimum_payment=request.POST["minimum_payment"]
-		chk = Loan(balance=balance, 
-					interest_rate=interest_rate, 
-					minimum_payment=minimum_payment)
-		chk.save()	
-		
-		return redirect('/portfolio/the-only-portfolio/')
+	#if request.method == 'POST':
+	#	balance=request.POST["balance"]
+	#	interest_rate=request.POST["interest_rate"]
+	#	minimum_payment=request.POST["minimum_payment"]
+	#	chk = Loan(balance=balance, 
+	#				interest_rate=interest_rate, 
+	#				minimum_payment=minimum_payment)
+	#	chk.save()	
+	#	
+	#	return redirect('/portfolio/the-only-portfolio/')
 
 
 	#loans = list(Loan.objects.all())
