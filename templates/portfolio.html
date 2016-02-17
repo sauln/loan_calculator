@@ -51,6 +51,23 @@ Contents of the loan calculator application
 
 <br><br>
 
+{% if loans %}
+<table id="id_loan_table" class="table">
+	<th>ID</th>
+	<th>Balance</th>
+	<th>Interest Rate</th>
+	<th>Minimum Payment</th>
+	{% load loan_formatting %}
+	{% for loan in loans %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ loan.balance | currency }}</td>
+			<td>{{ loan.interest_rate }}</td>
+			<td>${{ loan.minimum_payment }}</td>
+		</tr>
+	{% endfor %}
+</table>
+{% endif %}
 
 
 2nd order:

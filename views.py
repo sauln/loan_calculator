@@ -10,6 +10,10 @@ class SummaryStats():
 		
 
 
+def portfolio_page(request):
+	loans = list(Loan.objects.all())
+	summary = SummaryStats(loans) 
+	return render(request, 'portfolio.html', {'loans': loans, 'summary':summary})
 
 
 def loancalc_page(request):
@@ -22,13 +26,12 @@ def loancalc_page(request):
 					minimum_payment=minimum_payment)
 		chk.save()	
 		
-	loans = list(Loan.objects.all())
+		return redirect('/loancalc/portfolio/the-only-portfolio/')
 
 
-	summary = SummaryStats(loans) 
-
-
-	return render(request, 'loancalc.html', {'loans': loans})
+	#loans = list(Loan.objects.all())
+	#summary = SummaryStats(loans) 
+	return render(request, 'loancalc.html') #, {'loans': loans, 'summary':summary})
 
 	#loans = Loan.objects.all()
 	#return render(request, 'loancalc.html', {'loans': loans})

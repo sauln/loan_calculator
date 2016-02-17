@@ -38,6 +38,19 @@ class LoanCalcTest(TestCase):
 		self.assertEqual(first_saved_item.balance, 123.321)
 		self.assertEqual(first_saved_item.minimum_payment, 5)
 		self.assertEqual(first_saved_item.interest_rate, 2.4)
+	
+	def test_redirects_after_a_POST_request(self):
+		Loan.objects.all().delete()
+
+		request = HttpRequest()
+		request.method = 'POST'
+		request.POST["balance"] = 12345
+		request.POST["interest_rate"] = 0.5
+		request.POST["minimum_payment"] = 11
+		response = loancalc_page(request)
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(response['location'], 'loancalc/portfolio/the-only-portfolio/')
+
 
 	def test_home_page_can_save_a_POST_request(self):
 		Loan.objects.all().delete()
@@ -48,7 +61,7 @@ class LoanCalcTest(TestCase):
 		request.POST["interest_rate"] = 0.5
 		request.POST["minimum_payment"] = 11
 		response = loancalc_page(request)
-
+		
 		self.assertEqual(Loan.objects.count(), 1)
 		new_item = Loan.objects.first()
 
