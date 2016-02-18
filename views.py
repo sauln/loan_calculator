@@ -8,9 +8,12 @@ class SummaryStats():
 	def __init__(self, loans):
 		self.total_debt = sum(loan.balance for loan in loans)
 
+
 def portfolio_page(request, port_id):
 	loans = list(Loan.objects.all())
 	portfolio_ = Portfolio.objects.get(id=port_id)
+	summary = SummaryStats(portfolio_.loan_set.all())
+	print(summary.total_debt)
 	return render(request, 'portfolio.html', {'portfolio': portfolio_})
 
 def add_loan(request, portfolio_id):

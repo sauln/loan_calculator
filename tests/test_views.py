@@ -2,12 +2,8 @@ from django.test import TestCase
 from django.core.urlresolvers import resolve
 from django.http import HttpRequest
 
-from loan_calculator.views import loancalc_page, SummaryStats
-from loan_calculator.models import Loan
-
-
-
-
+from loan_calculator.views import loancalc_page, SummaryStats, add_loan, new_portfolio
+from loan_calculator.models import Loan, Portfolio
 
 class NewPortfolioTest(TestCase):
 	def test_redirects_after_a_POST_request(self):
@@ -18,12 +14,11 @@ class NewPortfolioTest(TestCase):
 		request.POST["balance"] = 12345
 		request.POST["interest_rate"] = 0.5
 		request.POST["minimum_payment"] = 11
-		response = loancalc_page(request)
-		self.assertEqual(response.status_code, 302)
-		self.assertEqual(response['location'], '/loancalc/portfolio/the-only-portfolio/')
+		response = new_portfolio(request)
+		self.assertEqual(response['location'], '/portfolio/1/')
 		self.assertTemplateUsed(response, 'portfolio.html')
 
-	def test_home_page_can_save_a_POST_request(self):
+	def test_home_page_can_save_new_POST_request(self):
 		Loan.objects.all().delete()
 
 		request = HttpRequest()
@@ -31,7 +26,7 @@ class NewPortfolioTest(TestCase):
 		request.POST["balance"] = 12345
 		request.POST["interest_rate"] = 0.5
 		request.POST["minimum_payment"] = 11
-		response = loancalc_page(request)
+		response = new_portfolio(request)
 		
 		self.assertEqual(Loan.objects.count(), 1)
 		new_item = Loan.objects.first()
@@ -45,17 +40,21 @@ class LoanCalcTest(TestCase):
 	def test_loancalc_url_resolves_to_loancalc_view(self):
 		found = resolve('/loancalc/')
 		self.assertEqual(found.func, loancalc_page)
+		
 
 	def setUp(self):
+		self.port = Portfolio()	
 		self.first_item = Loan()
 		self.first_item.balance = 123.321
 		self.first_item.minimum_payment = 5
 		self.first_item.interest_rate = 2.4
+		self.first_item.portfolio = self.port
 		self.first_item.save()
 		self.second_item = Loan()
 		self.second_item.balance = 2345.0
 		self.second_item.minimum_payment = 50
 		self.second_item.interest_rate = 11.1
+		self.second_item.portfolio = self.port
 		self.second_item.save()
 
 	def tearDown(self):
